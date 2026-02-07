@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long long gcda(long long a, long long b) {
+    while (b != 0) {
+        long long r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+long long lcma(long long a, long long b) {
+    long long gcd = gcda(a, b);
+    return (a * b) / gcd;
+}
+
+int nthMagicalNumber(int n, int a, int b) {
+    long long low = min(a, b);
+    long long high = (long long)n * min(a, b);
+    long long lcm = lcma(a, b);
+
+    while (low < high) {
+        long long mid = low + (high - low) / 2;
+        long long count = mid / a + mid / b - mid / lcm;
+
+        if (count < n)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+
+    return low % 1000000007;
+}
+
+int main() {
+    int n, a, b;
+    cin >> n >> a >> b;
+    cout << nthMagicalNumber(n, a, b);
+    return 0;
+}
