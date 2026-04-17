@@ -1,0 +1,25 @@
+To find the Shortest Common Supersequence (SCS) of two strings, we use the concept of Longest Common Subsequence (LCS).
+
+The SCS should contain both strings as subsequences.
+To avoid duplication, we:
+First compute the LCS
+Then merge both strings using the LCS
+
+Compute LCS using DP
+Let dp[i][j] = length of LCS of str1[0...i-1] and str2[0...j-1]
+Reconstruct SCS from DP table
+Start from dp[n][m] and backtrack:
+If characters match → include it once
+If not:
+Move in the direction of larger DP value
+Add corresponding character
+Append remaining characters
+If one string is exhausted, add remaining part of the other
+``
+  if (str1[i-1] == str2[j-1])
+      dp[i][j] = 1 + dp[i-1][j-1];
+  else
+      dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+``
+Time Complexity: O(n × m)
+Space Complexity: O(n × m)
